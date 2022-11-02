@@ -1,10 +1,12 @@
 import express from "express";
-import router from "./routes/gastos";
+import routerGastos from "./routes/gastos";
+import routerUser from "./routes/user";
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/api", router);
+app.use("/api", routerGastos);
+app.use("/api", routerUser);
 
 export default app;

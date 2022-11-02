@@ -5,7 +5,9 @@ import { AppDataSource } from "./config/db";
 async function main() {
   try {
     const PORT = 3000;
+
     await AppDataSource.initialize();
+
     console.log("DataBase Ready");
     app.listen(PORT, () => {
       console.log(`Server on Port ${PORT}`);
