@@ -1,10 +1,13 @@
 import "reflect-metadata";
+import dotenv from "dotenv";
 import app from "./app";
 import { AppDataSource } from "./config/db";
 
+dotenv.config();
+
 async function main() {
   try {
-    const PORT = 3000;
+    const PORT = process.env.PORT || 3000;
 
     await AppDataSource.initialize();
 

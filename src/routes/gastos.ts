@@ -1,8 +1,9 @@
 import { Router } from "express";
+import { validateJWT } from "../middleware/validationJWT";
 
 const router = Router();
 
-router.get("/", (_req, res) => {
+router.get("/gastos", validateJWT, (_req, res) => {
   res.send("hello");
 });
 
