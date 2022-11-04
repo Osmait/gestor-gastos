@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { User } from "../models/User";
 
@@ -6,6 +6,9 @@ interface IPayload {
   uid: string;
   iat: number;
   exp: number;
+}
+export interface CustomRequest extends Request {
+  token: string | JwtPayload;
 }
 
 export const validateJWT = async (
@@ -26,12 +29,15 @@ export const validateJWT = async (
       process.env.SECRETKEY || "token"
     ) as IPayload;
     const user = await User.findOneBy({ id: parseInt(payload.uid) });
+
     if (!user) {
       return res.status(401).json({
         msg: "user dont exits in DB",
       });
     }
-    req.userId = user.id.toString();
+
+    (req as CustomRequest).token = user;
+
     next();
   } catch (error) {
     res.status(401).json({
