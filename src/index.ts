@@ -12,7 +12,7 @@ async function main() {
     await AppDataSource.initialize();
 
     console.log("DataBase Ready");
-    console.log(process.env.SECRETKEY);
+
     app.listen(PORT, () => {
       console.log(`Server on Port ${PORT}`);
     });

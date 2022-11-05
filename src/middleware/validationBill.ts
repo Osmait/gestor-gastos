@@ -1,6 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { billSchema } from "../schemas/billSchema";
 
+interface errorInterfase {
+  details: [
+    {
+      message: string;
+    }
+  ];
+}
+
 export const validateBill = async (
   req: Request,
   res: Response,
@@ -11,7 +19,7 @@ export const validateBill = async (
     await billSchema.validateAsync(bill);
   } catch (error) {
     res.status(404).json({
-      msg: error,
+      msg: (error as errorInterfase).details[0].message,
     });
     return;
   }

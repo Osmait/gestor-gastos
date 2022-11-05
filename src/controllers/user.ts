@@ -1,6 +1,12 @@
 import { User } from "../models/User";
 import { Request, Response } from "express";
 import { encryptPassword } from "../helpers/encryptPassword";
+import { CustomRequest } from "../middleware/validationJWT";
+
+interface tokenInterface {
+  id: number;
+  password: string;
+}
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -87,4 +93,10 @@ export const deleteUser = async (req: Request, res: Response) => {
       error,
     });
   }
+};
+
+export const perfil = async (req: Request, res: Response) => {
+  const user = (req as CustomRequest).token as tokenInterface;
+  user.password = "";
+  res.json(user);
 };

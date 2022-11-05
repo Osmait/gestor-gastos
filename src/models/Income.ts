@@ -4,12 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
+  BaseEntity,
 } from "typeorm";
-import { User } from "./User";
 
 @Entity()
-export class Income {
+export class Income extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,10 +16,10 @@ export class Income {
   description: string;
 
   @Column()
-  income: string;
+  amount: number;
 
-  @ManyToOne(() => User, (user) => user.id)
-  user_: User;
+  @Column()
+  user_id: number;
 
   @CreateDateColumn()
   created_at: Date;

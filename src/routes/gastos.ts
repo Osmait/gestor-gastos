@@ -10,7 +10,7 @@ import { validateJWT } from "../middleware/validationJWT";
 
 const router = Router();
 router.get("/gastos", validateJWT, getAllBill);
-router.post("/gastos", validateJWT, validateBill, createBill);
+router.post("/gastos/", validateJWT, createBill);
 router.put("/gastos/:id", validateJWT, validateBill, updateBill);
 router.delete("/gastos/:id", validateJWT, deleteBill);
 
