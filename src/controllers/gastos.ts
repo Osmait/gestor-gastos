@@ -18,7 +18,7 @@ export const createBill = async (req: Request, res: Response) => {
     bill.save();
 
     res.status(201).json({
-      msg: "successfully added",
+      bill,
     });
   } catch (error) {
     res.status(404).json({
