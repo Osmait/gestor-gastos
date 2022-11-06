@@ -15,10 +15,10 @@ export const createincome = async (req: Request, res: Response) => {
     income.description = description;
     income.amount = amount;
     income.user_id = user.id;
-    income.save();
+    const dato = await income.save();
 
     res.status(201).json({
-      income,
+      dato,
     });
   } catch (error) {
     res.status(404).json({

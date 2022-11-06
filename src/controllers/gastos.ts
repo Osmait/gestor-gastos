@@ -15,10 +15,10 @@ export const createBill = async (req: Request, res: Response) => {
     bill.description = description;
     bill.amount = amount;
     bill.user_id = user.id;
-    bill.save();
+    const dato = await bill.save();
 
     res.status(201).json({
-      bill,
+      dato,
     });
   } catch (error) {
     res.status(404).json({
