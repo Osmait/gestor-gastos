@@ -63,9 +63,9 @@ export const updateBill = async (req: Request, res: Response) => {
     }
     bill.description = description;
     bill.amount = amount;
-    bill.save();
+    const billDB = await bill.save();
     res.status(200).json({
-      msg: "Update Success ",
+      billDB,
     });
   } catch (error) {
     res.status(404).json({

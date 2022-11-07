@@ -63,9 +63,9 @@ export const updateincome = async (req: Request, res: Response) => {
     }
     income.description = description;
     income.amount = amount;
-    income.save();
+    const incomeDB = await income.save();
     res.status(200).json({
-      msg: "Update Success ",
+      incomeDB,
     });
   } catch (error) {
     res.status(404).json({
