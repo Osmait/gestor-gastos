@@ -12,24 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-require("reflect-metadata");
-const dotenv_1 = __importDefault(require("dotenv"));
-const app_1 = __importDefault(require("./app"));
-const db_1 = require("./config/db");
-dotenv_1.default.config();
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const PORT = process.env.PORT || 3000;
-            yield db_1.AppDataSource.initialize();
-            console.log("DataBase Ready");
-            app_1.default.listen(PORT, () => {
-                console.log(`Server on Port ${PORT}`);
+exports.validateJWT = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const User_1 = require("../models/User");
+const validateJWT = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.header("x-token");
+    console.log(token);
+    if (!token) {
+        return res.status(401).json({
+            msg: "Token dont exist ",
+        });
+    }
+    try {
+        const payload = jsonwebtoken_1.default.verify(token, process.env.SECRETKEY || "token");
+        const user = yield User_1.User.findOneBy({ id: parseInt(payload.uid) });
+        if (!user) {
+            return res.status(401).json({
+                msg: "user dont exits in DB",
             });
         }
-        catch (error) {
-            console.log(error);
-        }
-    });
-}
-main();
+        req.token = user;
+        next();
+    }
+    catch (error) {
+        res.status(401).json({
+            msg: "autorization fail",
+        });
+    }
+});
+exports.validateJWT = validateJWT;
