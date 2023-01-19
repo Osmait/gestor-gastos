@@ -5,13 +5,13 @@ import { User } from "../models/User";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "containers-us-west-74.railway.app",
-  port: 7435,
-  username: "postgres",
-  password: "OVTZ9smbWIuNNh53LGfq",
-  database: "railway",
+  host: process.env.HOST!,
+  port: parseInt(process.env.PORT_DATABASE!),
+  username: process.env.USER!,
+  password: process.env.PASSWORD!,
+  database: process.env.DATABASE!,
   entities: [User, Income, Bill],
-  synchronize: true,
+  synchronize: false,
   logging: true,
   migrations: [],
 });
